@@ -6,11 +6,11 @@ var extend = require('lodash-node/modern/objects/assign');
 var stores = [];
 var actions = [];
 
-var Flux = function () {
+var Fluxy = function () {
   this._dispatcher = new Dispatcher();
 }
 
-Flux.createStore = function (proto) {
+Fluxy.createStore = function (proto) {
   var Store = FluxStore.extend(function () {
     FluxStore.call(this);
   }, proto);
@@ -19,15 +19,15 @@ Flux.createStore = function (proto) {
   return store;
 }
 
-Flux.createActions = function (proto) {
+Fluxy.createActions = function (proto) {
   var Action = FluxActions.extend(proto);
   var action = new Action();
   actions.push(action);
   return action;
 };
 
-Flux.start = function () {
-  var flux = new Flux();
+Fluxy.start = function () {
+  var flux = new Fluxy();
   stores.forEach(function (store) {
     store.mount(flux);
   });
@@ -38,7 +38,7 @@ Flux.start = function () {
 }
 
 
-Flux.prototype = extend(Flux.prototype, {
+Fluxy.prototype = extend(Fluxy.prototype, {
   //dispatcher delegation
   registerAction: function () {
     return this._dispatcher.registerAction.apply(this._dispatcher, arguments);
@@ -51,4 +51,4 @@ Flux.prototype = extend(Flux.prototype, {
   },
 });
 
-module.exports = Flux;
+module.exports = Fluxy;

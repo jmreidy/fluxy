@@ -1,13 +1,18 @@
 {
-  "name": "flux",
-  "version": "0.0.0",
+  "name": "fluxy",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "directories": {
-    "example": "example"
+    "example": "example",
+    "lib": "lib"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node tests/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jmreidy/fluxy.git"
   },
   "author": "Justin Reidy <jmreidy@rzrsharp.net>",
   "license": "MIT",
@@ -15,5 +20,8 @@
     "mori": "^0.2.6",
     "bluebird": "^1.2.4",
     "lodash-node": "^2.4.1"
+  },
+  "devDependencies": {
+    "tape": "^2.13.1"
   }
 }
