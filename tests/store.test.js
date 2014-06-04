@@ -117,3 +117,13 @@ test('Actions are assigned to a dispatcher', function (t) {
   t.equal(registrations[0][0], 'FOO_ACTION');
   t.equal(registrations[0][1], handlerFn);
 });
+
+test('Store exposes mori methods statically', function (t) {
+  t.plan(2);
+
+  var a = FluxStore.vector(1, 2);
+  var b = FluxStore.vector(1);
+
+  t.equals(FluxStore.inc(1), 2);
+  t.ok(FluxStore.equals(FluxStore.conj(b, 2), a));
+});
