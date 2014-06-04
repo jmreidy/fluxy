@@ -51,8 +51,8 @@ includes some differentiating features:
 
   * Promises (via [Bluebird](https://github.com/petkaantonov/bluebird/)) drive the Dispatcher/Action system, along for the easy registration of async action handlers
 
-  * Stores embrace immutable data, going so far as to be powered by [Mori](https://github.com/swannodette/mori),
-  a JS port of ClojureScript's immutable data structures.
+  * Stores embrace immutable data, going so far as to be powered by [Mori](https://github.com/swannodette/mori), which
+  provides a light convenience API around ClojureScript's data structures.
 
 
 ##API
