@@ -10,6 +10,9 @@
   "scripts": {
     "test": "node tests/index.js"
   },
+  "bin": {
+    "fluxy": "./bin/cli.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/jmreidy/fluxy.git"
@@ -17,9 +20,12 @@
   "author": "Justin Reidy <jmreidy@rzrsharp.net>",
   "license": "MIT",
   "dependencies": {
-    "mori": "^0.2.6",
     "bluebird": "^1.2.4",
-    "lodash-node": "^2.4.1"
+    "chalk": "^0.4.0",
+    "commander": "^2.2.0",
+    "lodash-node": "^2.4.1",
+    "minimist": "^0.2.0",
+    "mori": "^0.2.6"
   },
   "devDependencies": {
     "tape": "^2.13.1"
