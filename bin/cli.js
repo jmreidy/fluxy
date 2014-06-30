@@ -92,9 +92,27 @@ commander
   .command('generate:constants <ConstantsName>')
   .description('Create a Fluxy Constants Enum')
   .option('-p, --path <path>', 'Destination directory')
+  .option('-a, --actions <actions>', 'Comma-delimited list of actions to seed the constants file. \n' +
+      'Constants here will also have complimentary CONSTANT_COMPLETED and CONSTANT_FAILED constants added')
   .action(function (name) {
     pending = loadTemplate('constants')
       .then(replaceName.bind(null, name))
+      .then(function (template) {
+        var actions = argv.a || argv.actions;
+        if (actions) {
+          var allActions = [];
+          actions = actions
+            .split(',')
+            .map(function (a) {
+              return a.trim();
+            })
+            .map(function (a) {
+              allActions.push(a, a + '_COMPLETED', a+'_FAILED');
+            });
+          template = template.replace('//LIST, OF, CONSTANTS', allActions.join(',\n  '));
+        }
+        return template;
+      })
       .then(handleTemplateResult(name, 'contants'))
       .then(success)
       .catch(exit);
