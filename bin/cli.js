@@ -109,6 +109,10 @@ commander
             .map(function (a) {
               allActions.push(a, a + '_COMPLETED', a+'_FAILED');
             });
+
+          allActions = allActions.map(function (a) {
+            return "'"+a+"'";
+          });
           template = template.replace('//LIST, OF, CONSTANTS', allActions.join(',\n  '));
         }
         return template;
