@@ -8,7 +8,7 @@ var actions = [];
 
 var Fluxy = function () {
   this._dispatcher = new Dispatcher();
-}
+};
 
 Fluxy.createStore = function (proto) {
   var Store = FluxStore.extend(function () {
@@ -17,7 +17,7 @@ Fluxy.createStore = function (proto) {
   var store = new Store();
   stores.push(store);
   return store;
-}
+};
 
 Fluxy.createActions = function (proto) {
   var Action = FluxActions.extend(proto);

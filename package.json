@@ -8,7 +8,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "node tests/index.js"
+    "test": "mocha test/*.test.js"
   },
   "bin": {
     "fluxy": "./bin/cli.js"
@@ -28,6 +28,9 @@
     "mori": "^0.2.6"
   },
   "devDependencies": {
+    "proxyquire": "^1.0.1",
+    "sinon": "^1.10.3",
+    "sinon-chai": "^2.5.0",
     "tape": "^2.13.1"
   }
 }
