@@ -8,7 +8,8 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "mocha test/*.test.js"
+    "test": "mocha test/*.test.js",
+    "watch": "mocha test/*.test.js -w"
   },
   "bin": {
     "fluxy": "./bin/cli.js"
