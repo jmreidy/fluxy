@@ -23,6 +23,7 @@
     "bluebird": "^1.2.4",
     "chalk": "^0.4.0",
     "commander": "^2.2.0",
+    "enum": "^0.2.6",
     "lodash-node": "^2.4.1",
     "minimist": "^0.2.0",
     "mori": "^0.2.6"
@@ -30,6 +31,6 @@
   "devDependencies": {
     "proxyquire": "^1.0.1",
     "sinon": "^1.10.3",
-    "sinon-chai": "^2.5.0",
+    "sinon-chai": "^2.5.0"
   }
 }

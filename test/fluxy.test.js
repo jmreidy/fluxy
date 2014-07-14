@@ -5,6 +5,8 @@ var Action = require('../lib/Action');
 describe('Fluxy', function () {
   var Fluxy = proxyquire('../index', {});
 
+  //createStore, createActions, and createConstants tested further in
+  //their own unit tests
   describe('.createStore', function () {
     it('creates and returns a Fluxy Store instance', function () {
       expect(Fluxy.createStore({})).to.be.an.instanceOf(Store);
@@ -14,6 +16,12 @@ describe('Fluxy', function () {
   describe('.createActions', function () {
     it('creates and returns a Fluxy Action instance', function () {
       expect(Fluxy.createActions({})).to.be.an.instanceOf(Action);
+    });
+  });
+
+  describe('.createConstants', function () {
+    it('creates and returns a Fluxy Constants instance', function () {
+      expect(Fluxy.createConstants({})).to.be.an.instanceOf(require('enum'));
     });
   });
 

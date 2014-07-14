@@ -1,6 +1,7 @@
 var Dispatcher = require('./lib/Dispatcher');
 var FluxStore = require('./lib/Store');
 var FluxActions = require('./lib/Action');
+var FluxConstants = require('./lib/Constants');
 var extend = require('lodash-node/modern/objects/assign');
 
 var stores = [];
@@ -24,6 +25,10 @@ Fluxy.createActions = function (proto) {
   var action = new Action();
   actions.push(action);
   return action;
+};
+
+Fluxy.createConstants = function (values) {
+  return FluxConstants(values);
 };
 
 Fluxy.start = function () {
