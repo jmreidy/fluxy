@@ -1,7 +1,7 @@
 var Fluxy = require('../index');
 var Promise = require('bluebird');
 
-describe.only('Fluxy Actions', function () {
+describe('Fluxy Actions', function () {
   var TestActions;
   var Constants = Fluxy.createConstants({
     serviceMessages: ['TEST', 'FAIL_EXAMPLE']
