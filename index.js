@@ -40,7 +40,12 @@ Fluxy.start = function () {
     action.mount(flux);
   });
   return flux;
-}
+};
+
+Fluxy.reset = function () {
+  stores = [];
+  actions = [];
+};
 
 
 Fluxy.prototype = extend(Fluxy.prototype, {
