@@ -55,6 +55,13 @@ includes some differentiating features:
   provides a light convenience API around ClojureScript's data structures.
 
 
-##API
-WIP, see example for now.
+##How to Use
+To be written
+
+##Roadmap to 1.0
+- [ ] Update generators to work with new API
+- [ ] Update example app to work with new API
+- [ ] Provide basic implementation steps in the README
+- [ ] Add code documentation
+- [ ] Cleanup internal implementation
 
