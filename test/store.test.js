@@ -22,15 +22,19 @@ describe.only('Fluxy Store', function () {
           [Constants.TEST, ActionHandler]
         ]
       });
-
       fluxy = Fluxy.start();
     });
 
     it('registers actions in the provided `actions` hash', function () {
       fluxy.dispatchAction(Constants.TEST, 'foo');
+
       expect(ActionHandler).to.have.been.calledOnce;
       expect(ActionHandler).to.have.been.calledWith('foo');
     });
+
+    it('defines the handler on the Store');
+
+    it('can specify actions to wait for');
   });
 
   describe('state handling', function () {
@@ -69,22 +73,51 @@ describe.only('Fluxy Store', function () {
     });
 
     describe('#set', function () {
-      context('when provided a function', function () {
-        it('updates the store state with the provided function');
-      });
 
-      context('when provided a value', function () {
-        context('for a string key', function () {
-          it('updates the store state with the provided value');
+      context('for an array key', function () {
+
+        context('when provided a function', function () {
+
+          it('updates the store state with the provided function', function () {
+            Store.set(['foo', 'bar'], function (val) {
+              return 'foobar';
+            });
+            expect(mori.get_in(Store.state, ['foo', 'bar'])).to.equal('foobar');
+          });
+
         });
 
-        context('for an array key', function () {
-          it('updates the store state with the provided value');
+        context('when provided a value', function () {
+
+          it('updates the store state with the provided value', function () {
+            Store.set(['foobar', 1], 'A');
+            expect(mori.get_in(Store.state, ['foobar', 1])).to.equal('A');
+          });
+
         });
+
       });
 
-      it('triggers a watch event with the provided key');
-      it('keeps track of the previous store state');
+      context('for a string key', function () {
+        context('when provided a function', function () {
+          it('updates the store state with the provided function', function () {
+            Store.set('foo', function (val) {
+              return mori.assoc(val, 'bar', 'foobar');
+            });
+            expect(mori.get_in(Store.state, ['foo', 'bar'])).to.equal('foobar');
+          });
+        });
+
+        context('when provided a value', function () {
+          it('updates the store state with the provided value', function () {
+            Store.set('topLevel', 'isFlat');
+            expect(mori.get(Store.state, 'topLevel')).to.equal('isFlat');
+          });
+        });
+
+        it('keeps track of the previous store state');
+        it('triggers a watch event with the provided key');
+      });
     });
 
     describe('#get', function () {
@@ -116,7 +149,20 @@ describe.only('Fluxy Store', function () {
         expect(Store.getAsJS('foobar')).to.deep.equal(['a', 'b']);
         expect(Store.getAsJS('topLevel')).to.equal('flat');
       });
+    });
 
+    describe('#undo', function () {
+      it('rolls the store back to previous state');
+      it('will revert to initial state if entirely rolled back');
+    });
+
+  });
+
+  describe('#toJS', function () {
+    var Store = Fluxy.createStore({});
+    it('casts the provided data structure to JS', function () {
+      var map = mori.js_to_clj({a: 'b'});
+      expect(Store.toJS(map)).to.deep.equal({a: 'b'});
     });
   });
 
