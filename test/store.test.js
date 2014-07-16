@@ -2,7 +2,7 @@ var Fluxy = require('../index');
 var FluxStore = require('../lib/Store');
 var mori = require('mori');
 
-describe.only('Fluxy Store', function () {
+describe('Fluxy Store', function () {
   var fluxy;
 
   afterEach(function () {
@@ -10,18 +10,30 @@ describe.only('Fluxy Store', function () {
   });
 
   describe('action registration', function () {
-    var Store;
+    var Store, SecondStore;
     var ActionHandler = Sinon.stub();
+    var FirstHandler = Sinon.stub();
+    var SecondHandler = Sinon.stub();
     var Constants = Fluxy.createConstants({
-      messages: ['TEST']
+      messages: ['TEST', 'LONGER_TEST']
     });
 
     beforeEach(function () {
       Store = Fluxy.createStore({
         actions: [
-          [Constants.TEST, ActionHandler]
+          [Constants.TEST, ActionHandler],
+          [Constants.LONGER_TEST, FirstHandler]
         ]
       });
+
+      SecondStore = Fluxy.createStore({
+        actions: [
+          [ Constants.LONGER_TEST,
+            {waitFor: Store},
+            SecondHandler ]
+        ]
+      });
+
       fluxy = Fluxy.start();
     });
 
@@ -32,9 +44,16 @@ describe.only('Fluxy Store', function () {
       expect(ActionHandler).to.have.been.calledWith('foo');
     });
 
-    it('defines the handler on the Store');
+    it('defines the handlers on the Store', function () {
+      expect(Store.handleTest).to.exist;
+      expect(Store.handleLongerTest).to.exist;
+    });
 
-    it('can specify actions to wait for');
+    it('can specify actions to wait for', function () {
+      fluxy.dispatchAction(Constants.LONGER_TEST);
+
+      expect(FirstHandler).to.be.calledBefore(SecondHandler);
+    });
   });
 
   describe('state handling', function () {
@@ -74,7 +93,30 @@ describe.only('Fluxy Store', function () {
 
     describe('#set', function () {
 
+      var itTracksStoreState = function () {
+        it('keeps track of the previous store state', function () {
+          Store.set(['foo', 'bar'], 'foobar');
+          expect(mori.count(Store.states)).to.equal(2);
+          expect(mori.get_in(Store.states, [0, 'foo', 'bar'])).to.equal('bar');
+        });
+      };
+
+      var itTriggersWatch = function (key, newVal) {
+        it('triggers a watch event with the provided key', function () {
+          var watcher = Sinon.spy();
+          var oldState = Store.state;
+
+          Store.addWatch(watcher);
+          Store.set(key, newVal);
+
+          expect(watcher).to.have.been.calledWith(key, oldState, Store.state);
+        });
+      };
+
       context('for an array key', function () {
+
+        itTracksStoreState();
+        itTriggersWatch(['foo', 'bar'], 'foobar');
 
         context('when provided a function', function () {
 
@@ -99,24 +141,30 @@ describe.only('Fluxy Store', function () {
       });
 
       context('for a string key', function () {
+
+        itTracksStoreState();
+        itTriggersWatch('topLevel', 'isFlat');
+
         context('when provided a function', function () {
+
           it('updates the store state with the provided function', function () {
             Store.set('foo', function (val) {
               return mori.assoc(val, 'bar', 'foobar');
             });
             expect(mori.get_in(Store.state, ['foo', 'bar'])).to.equal('foobar');
           });
+
         });
 
         context('when provided a value', function () {
+
           it('updates the store state with the provided value', function () {
             Store.set('topLevel', 'isFlat');
             expect(mori.get(Store.state, 'topLevel')).to.equal('isFlat');
           });
+
         });
 
-        it('keeps track of the previous store state');
-        it('triggers a watch event with the provided key');
       });
     });
 
@@ -152,8 +200,21 @@ describe.only('Fluxy Store', function () {
     });
 
     describe('#undo', function () {
-      it('rolls the store back to previous state');
-      it('will revert to initial state if entirely rolled back');
+      it('rolls the store back to previous state', function () {
+        Store.set('topLevel', 1);
+        Store.set('topLevel', 2);
+        Store.undo();
+
+        expect(Store.get('topLevel')).to.equal(1);
+      });
+
+      it('will revert to initial state if entirely rolled back', function () {
+        Store.set('topLevel', 1);
+        Store.undo();
+        Store.undo();
+
+        expect(Store.get('topLevel')).to.equal('flat');
+      });
     });
 
   });
