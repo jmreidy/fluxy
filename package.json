@@ -27,7 +27,7 @@
     "enum": "^0.2.6",
     "lodash-node": "^2.4.1",
     "minimist": "^0.2.0",
-    "mori": "^0.2.6"
+    "mori": "^0.2.9"
   },
   "devDependencies": {
     "mocha": "^1.20.1",
