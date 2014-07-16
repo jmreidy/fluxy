@@ -62,4 +62,4 @@ Fluxy.prototype = extend(Fluxy.prototype, {
 });
 
 module.exports = Fluxy;
-module.exports.Store = FluxStore;
+module.exports.$ = require('mori');

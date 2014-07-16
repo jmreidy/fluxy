@@ -60,4 +60,8 @@ describe('Fluxy', function () {
 
   });
 
+  describe('it exposes mori', function () {
+    expect(Fluxy.$).to.equal(require('mori'));
+  });
+
 });

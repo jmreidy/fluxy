@@ -45,7 +45,7 @@ describe('Fluxy Actions', function () {
 
     it('hooks up the handler for Constant_COMPLETED', function (done) {
       TestActions.test('arg1', 'arg2').then(function () {
-        expect(TestActions.dispatchAction).to.have.been.calledWith(Constants.TEST_COMPLETED.value, {payload: 'resolved'});
+        expect(TestActions.dispatchAction).to.have.been.calledWith(Constants.TEST_COMPLETED.value, 'resolved');
         done();
       })
       .catch(done);
@@ -53,7 +53,7 @@ describe('Fluxy Actions', function () {
 
     it('hooks up the handler for Constant_FAILED', function (done) {
       TestActions.failExample().then(function () {
-        expect(TestActions.dispatchAction).to.have.been.calledWith(Constants.FAIL_EXAMPLE_FAILED.value, {error: 'failed'});
+        expect(TestActions.dispatchAction).to.have.been.calledWith(Constants.FAIL_EXAMPLE_FAILED.value, 'failed');
         done();
       })
       .catch(done);
