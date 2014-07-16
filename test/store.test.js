@@ -219,6 +219,27 @@ describe('Fluxy Store', function () {
 
   });
 
+  describe('watchers', function () {
+    var Store = Fluxy.createStore({});
+    var watcher = Sinon.stub();
+
+    describe('#addWatch', function () {
+      it('adds a watcher', function () {
+        Store.addWatch(watcher);
+        expect(Store.watchers).to.include(watcher);
+      });
+
+    });
+
+    describe('#removeWatch', function () {
+      it('removes a watcher', function () {
+        Store.addWatch(watcher);
+        Store.removeWatch(watcher);
+        expect(Store.watchers).to.not.include(watcher);
+      });
+    });
+  });
+
   describe('#toJS', function () {
     var Store = Fluxy.createStore({});
     it('casts the provided data structure to JS', function () {
