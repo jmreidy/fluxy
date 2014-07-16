@@ -248,4 +248,10 @@ describe('Fluxy Store', function () {
     });
   });
 
+  it('exposes mori functionality', function () {
+    var Store = Fluxy.createStore({});
+    expect(Store.$equals).to.equal(mori.equals);
+  });
+
+
 });
