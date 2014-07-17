@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/jmreidy/fluxy.svg?branch=master)](https://travis-ci.org/jmreidy/fluxy)
 #Fluxy
 
 An implementation of Facebook's Flux architecture.
