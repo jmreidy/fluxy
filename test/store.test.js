@@ -104,6 +104,7 @@ describe('Fluxy Store', function () {
 
       var itTriggersWatch = function (key, newVal) {
         it('triggers a watch event with the provided key', function () {
+          Sinon.spy(Store, '_updateState');
           var watcher = Sinon.spy();
           var oldState = Store.state;
 
@@ -111,6 +112,7 @@ describe('Fluxy Store', function () {
           Store.set(key, newVal);
 
           expect(watcher).to.have.been.calledWith(key, oldState, Store.state);
+          expect(watcher).to.have.been.calledAfter(Store._updateState);
         });
       };
 
