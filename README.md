@@ -55,7 +55,7 @@ includes some differentiating features:
   provides a light convenience API around ClojureScript's data structures.
 
 
-##How to Use
+##How it Works
 A Fluxy implementation will define and use three different types of service
 objects: Stores, Actions, and Constants. While these three types of objects operate
 in concert, their roles are very distrint from one another - in fact, a Store should
@@ -285,12 +285,13 @@ functions, but otherwise, ClojureScript objects should not be used extensively (
 of tying your components too tightly to the Fluxy implementation.
 
 
+For further details, be sure to check out the `examples` directory and the test suite.
 
 ##Roadmap to 1.0
 - [x] Update generators to work with new API
 - [x] Update example app to work with new API
 - [x] Provide basic implementation steps in the README
-- [ ] Lockdown API
+- [ ] Lock down API
 - [ ] Add code documentation
 - [ ] Cleanup internal implementation
 
