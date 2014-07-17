@@ -38,10 +38,11 @@ describe('Fluxy Store', function () {
     });
 
     it('registers actions in the provided `actions` hash', function () {
-      fluxy.dispatchAction(Constants.TEST, 'foo');
+      fluxy.dispatchAction(Constants.TEST, 'foo', 'bar');
 
       expect(ActionHandler).to.have.been.calledOnce;
-      expect(ActionHandler).to.have.been.calledWith('foo');
+      expect(ActionHandler).to.have.been.calledOn(Store);
+      expect(ActionHandler).to.have.been.calledWith('foo', 'bar');
     });
 
     it('defines the handlers on the Store', function () {

@@ -5,24 +5,25 @@ var Dispatcher = require('../lib/Dispatcher');
 describe('Fluxy Actions', function () {
   var TestActions, fluxy;
   var testSpy = Sinon.stub();
+  var serviceFn = Sinon.spy(function (result) {
+    var token = Promise.defer();
+    token.resolve('resolved');
+    return token.promise;
+  });
   var Constants = Fluxy.createConstants({
     serviceMessages: ['TEST', 'FAIL_EXAMPLE']
   });
 
   beforeEach(function () {
     TestActions = Fluxy.createActions({
-      serviceActions: [
-        [Constants.TEST, function (result) {
-          var token = Promise.defer();
-          token.resolve('resolved');
-          return token.promise;
-        }],
-        [Constants.FAIL_EXAMPLE, function () {
+      serviceActions: {
+        testService: [Constants.TEST, serviceFn],
+        failExample: [Constants.FAIL_EXAMPLE, function () {
           var token = Promise.defer();
           token.reject('failed');
           return token.promise;
         }]
-      ],
+      },
       testAction: testSpy
     });
     fluxy = Fluxy.start();
@@ -35,16 +36,13 @@ describe('Fluxy Actions', function () {
 
   describe('service actions', function () {
 
-    it('registers an action handler against the provided Constant', function (done) {
-      TestActions.test('arg1', 'arg2').then(function () {
-        expect(TestActions.dispatchAction).to.have.been.calledWith(Constants.TEST.value, 'arg1', 'arg2');
-        done();
-      })
-      .catch(done);
+    it('passes action arguments to the handler', function () {
+      TestActions.testService('arg1', 'arg2');
+      expect(serviceFn).to.have.been.calledWith('arg1', 'arg2');
     });
 
     it('hooks up the handler for Constant_COMPLETED', function (done) {
-      TestActions.test('arg1', 'arg2').then(function () {
+      TestActions.testService('arg1', 'arg2').then(function () {
         expect(TestActions.dispatchAction).to.have.been.calledWith(Constants.TEST_COMPLETED.value, 'resolved');
         done();
       })
@@ -76,7 +74,7 @@ describe('Fluxy Actions', function () {
       });
 
       it('throws an error', function () {
-        expect(Fluxy.start).to.throw('Cannot assign duplicate function name "test"');
+        expect(Fluxy.start).to.throw('Cannot assign duplicate function name "testService"');
       });
     });
   });
