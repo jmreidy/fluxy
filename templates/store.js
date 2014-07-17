@@ -6,12 +6,11 @@ var PLACEHOLDER_NAME = Fluxy.createStore({
     };
   },
 
-  actions: {
+  actions: [
     /*
-    handleActionName: [Constants.ActionName, function () {
-    }],
+    [Constants.ActionName, ActionHandler],
     */
-  },
+  ]
 });
 
 module.exports = PLACEHOLDER_NAME;
