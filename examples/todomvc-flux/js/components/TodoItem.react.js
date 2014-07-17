@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2014 Facebook, Inc.
+ * Copyright 2013-2014 Justin Reicy
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -81,7 +81,7 @@ var TodoItem = React.createClass({
   },
 
   _onToggleComplete: function() {
-    TodoActions.toggleComplete(this.props.todo);
+    TodoActions.toggleComplete(this.props.todo.id, !this.props.todo.completed);
   },
 
   _onDoubleClick: function() {

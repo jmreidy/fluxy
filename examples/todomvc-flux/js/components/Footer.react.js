@@ -76,7 +76,7 @@ var Footer = React.createClass({
    * Event handler to delete all completed TODOs
    */
   _onClearCompletedClick: function() {
-    TodoActions.destroyCompleted();
+    TodoActions.destroyCompletedTodos();
   }
 
 });

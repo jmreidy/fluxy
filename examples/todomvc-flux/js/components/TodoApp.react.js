@@ -32,7 +32,7 @@ var TodoStore = require('../stores/TodoStore');
  */
 function getTodoState() {
   return {
-    allTodos: TodoStore.getAll(),
+    allTodos: TodoStore.get('todos'),
     areAllComplete: TodoStore.areAllComplete()
   };
 }
@@ -44,33 +44,32 @@ var TodoApp = React.createClass({
   },
 
   componentDidMount: function() {
-    TodoStore.addChangeListener(this._onChange);
+    TodoStore.addWatch(this._onChange);
   },
 
   componentWillUnmount: function() {
-    TodoStore.removeChangeListener(this._onChange);
+    TodoStore.removeWatch(this._onChange);
   },
 
-  /**
-   * @return {object}
-   */
+  shouldComponentUpdate: function (nextProps, nextState) {
+    return !TodoStore.$equals(this.state.allTodos, nextState.allTodos);
+  },
+
   render: function() {
+    var allTodos = TodoStore.toJS(this.state.allTodos);
   	return (
       <div>
         <Header />
         <MainSection
-          allTodos={this.state.allTodos}
+          allTodos={allTodos}
           areAllComplete={this.state.areAllComplete}
         />
-        <Footer allTodos={this.state.allTodos} />
+        <Footer allTodos={allTodos} />
       </div>
   	);
   },
 
-  /**
-   * Event handler for 'change' events coming from the TodoStore
-   */
-  _onChange: function() {
+  _onChange: function(keys, oldState, newState) {
     this.setState(getTodoState());
   }
 

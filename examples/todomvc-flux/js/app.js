@@ -17,8 +17,12 @@
  */
 
 var React = require('react');
+var Fluxy = require('fluxy');
 
 var TodoApp = require('./components/TodoApp.react');
+
+
+Fluxy.start();
 
 React.renderComponent(
   <TodoApp />,

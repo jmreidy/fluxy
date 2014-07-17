@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2014 Facebook, Inc.
+ * Copyright 2013-2014 Justin Reidy
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,80 +16,32 @@
  * TodoActions
  */
 
-var AppDispatcher = require('../dispatcher/AppDispatcher');
+var Fluxy = require('fluxy');
+
 var TodoConstants = require('../constants/TodoConstants');
+var TodoService = require('../services/TodoService');
 
-var TodoActions = {
-
-  /**
-   * @param  {string} text
-   */
-  create: function(text) {
-    AppDispatcher.handleViewAction({
-      actionType: TodoConstants.TODO_CREATE,
-      text: text
-    });
-  },
-
-  /**
-   * @param  {string} id The ID of the ToDo item
-   * @param  {string} text
-   */
-  updateText: function(id, text) {
-    AppDispatcher.handleViewAction({
-      actionType: TodoConstants.TODO_UPDATE_TEXT,
-      id: id,
-      text: text
-    });
-  },
-
-  /**
-   * Toggle whether a single ToDo is complete
-   * @param  {object} todo
-   */
-  toggleComplete: function(todo) {
-    var id = todo.id;
-    if (todo.complete) {
-      AppDispatcher.handleViewAction({
-        actionType: TodoConstants.TODO_UNDO_COMPLETE,
-        id: id
-      });
-    } else {
-      AppDispatcher.handleViewAction({
-        actionType: TodoConstants.TODO_COMPLETE,
-        id: id
-      });
-    }
-  },
-
-  /**
-   * Mark all ToDos as complete
-   */
-  toggleCompleteAll: function() {
-    AppDispatcher.handleViewAction({
-      actionType: TodoConstants.TODO_TOGGLE_COMPLETE_ALL
-    });
-  },
-
-  /**
-   * @param  {string} id
-   */
-  destroy: function(id) {
-    AppDispatcher.handleViewAction({
-      actionType: TodoConstants.TODO_DESTROY,
-      id: id
-    });
-  },
-
-  /**
-   * Delete all the completed ToDos
-   */
-  destroyCompleted: function() {
-    AppDispatcher.handleViewAction({
-      actionType: TodoConstants.TODO_DESTROY_COMPLETED
-    });
+var TodoActions = Fluxy.createActions({
+  serviceActions: {
+    create: [TodoConstants.TODO_CREATE, function (text) {
+      return TodoService.create(text);
+    }],
+    updateText: [TodoConstants.TODO_UPDATE_TEXT, function (id, text) {
+      return TodoService.update(id, {text: text});
+    }],
+    toggleComplete: [TodoConstants.TODO_TOGGLE_COMPLETION, function (id, completed) {
+      return TodoService.update(id, {completed: completed});
+    }],
+    completeAll: [TodoConstants.TODO_COMPLETE_ALL, function () {
+      return TodoService.completeAll();
+    }],
+    destroy: [TodoConstants.TODO_DESTROY, function (id) {
+      return TodoService.destroy(id);
+    }],
+    destroyCompletedTodos: [TodoConstants.TODO_DESTROY_COMPLETED_TODOS, function () {
+      return TodoService.destroyCompleted();
+    }]
   }
-
-};
+});
 
 module.exports = TodoActions;

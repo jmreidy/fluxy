@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2014 Facebook, Inc.
+ * Copyright 2013-2014 Justin Reidy
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,19 @@
  * TodoConstants
  */
 
-var keyMirror = require('react/lib/keyMirror');
+var Fluxy = require('fluxy');
 
-module.exports = keyMirror({
-  TODO_CREATE: null,
-  TODO_COMPLETE: null,
-  TODO_DESTROY: null,
-  TODO_DESTROY_COMPLETED: null,
-  TODO_TOGGLE_COMPLETE_ALL: null,
-  TODO_UNDO_COMPLETE: null,
-  TODO_UPDATE_TEXT: null
+var TodoConstants = Fluxy.createConstants({
+  serviceMessages: [
+    'TODO_CREATE',
+    'TODO_UPDATE_TEXT',
+    'TODO_TOGGLE_COMPLETION',
+    'TODO_COMPLETE_ALL',
+    'TODO_DESTROY',
+    'TODO_DESTROY_COMPLETED_TODOS'
+  ],
+  messages: [],
+  values: {}
 });
+
+module.exports = TodoConstants;
