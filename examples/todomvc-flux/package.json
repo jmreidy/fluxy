@@ -8,7 +8,7 @@
     "fluxy": "0.3.0-beta2"
   },
   "devDependencies": {
-    "fluxy": "0.3.0-beta4",
+    "fluxy": "0.3.0",
     "browserify": "~2.36.0",
     "envify": "~1.2.0",
     "reactify": "~0.4.0",
