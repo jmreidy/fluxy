@@ -223,10 +223,16 @@ describe('Fluxy Store', function () {
   });
 
   describe('watchers', function () {
-    var Store = Fluxy.createStore({});
-    var watcher = Sinon.stub();
+    var Store, watcher;
+
 
     describe('#addWatch', function () {
+      beforeEach(function () {
+        watcher = Sinon.stub();
+        Store = Fluxy.createStore({});
+        Fluxy.start();
+      });
+
       it('adds a watcher', function () {
         Store.addWatch(watcher);
         expect(Store.watchers).to.include(watcher);
@@ -235,10 +241,22 @@ describe('Fluxy Store', function () {
     });
 
     describe('#removeWatch', function () {
-      it('removes a watcher', function () {
+      beforeEach(function () {
+        watcher = Sinon.stub();
+        Store = Fluxy.createStore({});
+        Fluxy.start();
         Store.addWatch(watcher);
+      });
+
+      it('removes a watcher', function () {
         Store.removeWatch(watcher);
         expect(Store.watchers).to.not.include(watcher);
+      });
+
+      it('does not call the removed watcher on set', function () {
+        Store.removeWatch(watcher);
+        Store.set('foo', 'bar');
+        expect(watcher.callCount).to.equal(0);
       });
     });
   });
