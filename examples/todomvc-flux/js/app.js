@@ -22,7 +22,7 @@ var Fluxy = require('fluxy');
 var TodoApp = require('./components/TodoApp.react');
 
 
-Fluxy.start();
+Fluxy.bootstrap('__fluxy__');
 
 React.renderComponent(
   <TodoApp />,

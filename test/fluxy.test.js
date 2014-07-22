@@ -39,25 +39,44 @@ describe('Fluxy', function () {
 
       action = Fluxy.createActions({});
       Sinon.spy(action, 'mount');
-
-      fluxy = Fluxy.start();
     });
 
     it('instantiates a new instance of Fluxy', function () {
+      fluxy = Fluxy.start();
+
       expect(fluxy).to.be.an.instanceOf(Fluxy);
       expect(Dispatcher).to.have.been.calledWithNew;
     });
 
     it('mounts all registered Stores', function () {
+      fluxy = Fluxy.start();
+
       expect(store.mount).to.have.been.calledOnce;
       expect(store.mount).to.have.been.calledWith(fluxy);
     });
 
     it('mounts all registered Actions', function () {
+      fluxy = Fluxy.start();
+
       expect(action.mount).to.have.been.calledOnce;
       expect(action.mount).to.have.been.calledWith(fluxy);
     });
 
+    context('when passed an object', function () {
+      var namedStore;
+      beforeEach(function () {
+        namedStore= Fluxy.createStore({name: 'NamedStore'});
+        fluxy = Fluxy.start({
+          NamedStore: {
+            foo: 'bar'
+          }
+        });
+      });
+
+      it('sets data on mounted stores', function () {
+        expect(namedStore.get('foo')).to.equal('bar');
+      });
+    });
   });
 
   describe('it exposes mori', function () {

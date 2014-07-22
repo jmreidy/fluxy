@@ -269,6 +269,11 @@ describe('Fluxy Store', function () {
     });
   });
 
+  it('can be named with a string', function () {
+    var Store = Fluxy.createStore({name: 'TestStore'});
+    expect(Store.name).to.equal('TestStore');
+  });
+
   it('exposes mori functionality', function () {
     var Store = Fluxy.createStore({});
     expect(Store.$equals).to.equal(mori.equals);

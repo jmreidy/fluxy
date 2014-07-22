@@ -4,11 +4,13 @@
   "description": "Example Flux architecture.",
   "main": "js/app.js",
   "dependencies": {
-    "react": "~0.10",
-    "fluxy": "0.3.0-beta2"
+    "react": "^0.11.0",
+    "express": "^4.6.1",
+    "node-jsx": "^0.11.0",
+    "st": "^0.5.1",
+    "fluxy": "jmreidy/fluxy"
   },
   "devDependencies": {
-    "fluxy": "0.3.0",
     "browserify": "~2.36.0",
     "envify": "~1.2.0",
     "reactify": "~0.4.0",
@@ -17,9 +19,8 @@
     "watchify": "~0.4.1"
   },
   "scripts": {
-    "start": "STATIC_ROOT=./static watchify -o js/bundle.js -v -d .",
-    "build": "STATIC_ROOT=./static NODE_ENV=production browserify . | uglifyjs -cm > js/bundle.min.js",
-    "collect-static": "collect-static . ./static"
+    "build": "STATIC_ROOT=./static NODE_ENV=production browserify -o assets/js/bundle.js -e js/app.js",
+    "server": "npm run-script build && node server"
   },
   "author": "Justin Reidy",
   "license": "Apache 2",

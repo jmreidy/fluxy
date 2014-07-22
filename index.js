@@ -7,6 +7,15 @@ var extend = require('lodash-node/modern/objects/assign');
 var stores = [];
 var actions = [];
 
+var assignDataToStore = function(initialData, Store) {
+  if (Store.name && initialData) {
+    var state = initialData[Store.name];
+    if (state) {
+      Store.replaceState(state);
+    }
+  }
+};
+
 var Fluxy = function () {
   this._dispatcher = new Dispatcher();
 };
@@ -31,15 +40,39 @@ Fluxy.createConstants = function (values) {
   return FluxConstants(values);
 };
 
-Fluxy.start = function () {
+Fluxy.start = function (initialData) {
   var flux = new Fluxy();
   stores.forEach(function (store) {
     store.mount(flux);
+    assignDataToStore(initialData, store);
   });
   actions.forEach(function (action) {
     action.mount(flux);
   });
   return flux;
+};
+
+Fluxy.bootstrap = function (key, context) {
+  var initialData;
+  if (!context && window) {
+    context = window;
+  }
+
+  if (context && context[key]) {
+    initialData = context[key];
+  }
+
+  Fluxy.start(initialData);
+};
+
+Fluxy.renderStateToString = function () {
+  var state = {};
+  stores.forEach(function (store) {
+    if (store.name) {
+      state[store.name] = store.toJS(store.state);
+    }
+  });
+  return JSON.stringify(state);
 };
 
 Fluxy.reset = function () {

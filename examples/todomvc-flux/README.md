@@ -46,20 +46,13 @@ From the root project directory run these commands from the command line:
 
 This will install all dependencies.
 
-To build the project, first run this command:
+There are two ways of running the example.
 
-    npm start
+First, as a client side only app (via static HTML), just run `npm run-script build` and
+then start a http server that makes the index.html file accessible (via, say, `httpster`).
 
-This will perform an initial build and start a watcher process that will update
-build.js with any changes you wish to make.  This watcher is based on
-[Browserify](http://browserify.org/) and
-[Watchify](https://github.com/substack/watchify), and it transforms React's JSX
-syntax into standard JavaScript with
-[Reactify](https://github.com/andreypopp/reactify).
-
-To run the app, spin up an HTTP server and visit
-http://localhost/.../todomvc-flux/.
-
+Alternatively, you can run an express server that will enable server side rendering. To do so,
+just run `npm run-script server`, and then hit localhost:3333/todo.
 
 ## Credit
 

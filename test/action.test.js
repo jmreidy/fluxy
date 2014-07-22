@@ -59,22 +59,18 @@ describe('Fluxy Actions', function () {
 
     context('when specifying an action with a duplicate name', function () {
 
-      beforeEach(function () {
-        TestActions = Fluxy.createActions({
-          serviceActions: [
-            [Constants.TEST, function (result) {
-              var token = Promise.defer();
-              token.resolve('resolved');
-              return token.promise;
-            }],
-          ],
-
-          test: testSpy
-        });
-      });
-
       it('throws an error', function () {
-        expect(Fluxy.start).to.throw('Cannot assign duplicate function name "testService"');
+        try {
+          TestActions = Fluxy.createActions({
+            testService: [Constants.FAIL_EXAMPLE, function () {}],
+            serviceActions: {
+              testService: [Constants.TEST, function () {}],
+            }
+          });
+        }
+        catch (e) {
+          expect(e.message).to.equal('Cannot assign duplicate function name "testService"');
+        }
       });
     });
   });

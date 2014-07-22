@@ -21,6 +21,7 @@ var Fluxy = require('fluxy');
 var $ = Fluxy.$;
 
 var TodoStore = Fluxy.createStore({
+  name: 'TodoStore',
   getInitialState: function () {
     //we're using a hash for todos b/c the Facebook base example does.
     //With mori, a vector might make more sense.
