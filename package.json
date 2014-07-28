@@ -35,6 +35,7 @@
     "proxyquire": "^1.0.1",
     "sinon": "^1.10.3",
     "sinon-chai": "^2.5.0",
-    "superagent": "^0.18.2"
+    "superagent": "^0.18.2",
+    "transit-js": "^0.8.649"
   }
 }
