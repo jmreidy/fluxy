@@ -54,6 +54,7 @@ var Footer = React.createClass({
       clearCompletedButton =
         <button
           id="clear-completed"
+          className="footer-button"
           onClick={this._onClearCompletedClick}>
           Clear completed ({completed})
         </button>;
@@ -67,16 +68,22 @@ var Footer = React.createClass({
           </strong>
           {itemsLeftPhrase}
         </span>
+        <button
+          className="footer-button"
+          onClick={this._onUndoClick}>
+          Undo Last
+        </button>
         {clearCompletedButton}
       </footer>
     );
   },
 
-  /**
-   * Event handler to delete all completed TODOs
-   */
   _onClearCompletedClick: function() {
     TodoActions.destroyCompletedTodos();
+  },
+
+  _onUndoClick: function () {
+    TodoActions.undo();
   }
 
 });

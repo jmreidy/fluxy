@@ -40,7 +40,10 @@ var TodoActions = Fluxy.createActions({
     }],
     destroyCompletedTodos: [TodoConstants.TODO_DESTROY_COMPLETED_TODOS, function () {
       return TodoService.destroyCompleted();
-    }]
+    }],
+  },
+  undo: function () {
+    this.dispatchAction(TodoConstants.TODO_UNDO, {});
   }
 });
 

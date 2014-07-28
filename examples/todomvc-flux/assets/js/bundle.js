@@ -41,7 +41,10 @@ var TodoActions = Fluxy.createActions({
     }],
     destroyCompletedTodos: [TodoConstants.TODO_DESTROY_COMPLETED_TODOS, function () {
       return TodoService.destroyCompleted();
-    }]
+    }],
+  },
+  undo: function () {
+    this.dispatchAction(TodoConstants.TODO_UNDO, {});
   }
 });
 
@@ -136,6 +139,7 @@ var Footer = React.createClass({displayName: 'Footer',
       clearCompletedButton =
         React.DOM.button({
           id: "clear-completed", 
+          className: "footer-button", 
           onClick: this._onClearCompletedClick}, 
           "Clear completed (", completed, ")"
         );
@@ -149,16 +153,22 @@ var Footer = React.createClass({displayName: 'Footer',
           ), 
           itemsLeftPhrase
         ), 
+        React.DOM.button({
+          className: "footer-button", 
+          onClick: this._onUndoClick}, 
+          "Undo Last"
+        ), 
         clearCompletedButton
       )
     );
   },
 
-  /**
-   * Event handler to delete all completed TODOs
-   */
   _onClearCompletedClick: function() {
     TodoActions.destroyCompletedTodos();
+  },
+
+  _onUndoClick: function () {
+    TodoActions.undo();
   }
 
 });
@@ -607,7 +617,9 @@ var TodoConstants = Fluxy.createConstants({
     'TODO_DESTROY',
     'TODO_DESTROY_COMPLETED_TODOS'
   ],
-  messages: [],
+  messages: [
+    'TODO_UNDO'
+  ],
   values: {}
 });
 
@@ -774,6 +786,9 @@ var TodoStore = Fluxy.createStore({
           todoMap
         );
       });
+    }],
+    [TodoConstants.TODO_UNDO, function () {
+      this.undo();
     }]
   ]
 });
@@ -1617,6 +1632,11 @@ var assignDataToStore = function(initialData, Store) {
   }
 };
 
+var safeStringify = function (obj) {
+  return JSON.stringify(obj).replace(/<\//g, '<\\\\/').replace(/<\!--/g, '<\\\\!--');
+};
+
+
 var Fluxy = function () {
   this._dispatcher = new Dispatcher();
 };
@@ -1666,14 +1686,16 @@ Fluxy.bootstrap = function (key, context) {
   Fluxy.start(initialData);
 };
 
-Fluxy.renderStateToString = function () {
+Fluxy.renderStateToString = function (serializer) {
   var state = {};
+  serializer = serializer || safeStringify;
   stores.forEach(function (store) {
     if (store.name) {
       state[store.name] = store.toJS(store.state);
     }
   });
-  return JSON.stringify(state);
+
+  return serializer(state);
 };
 
 Fluxy.reset = function () {
@@ -2076,6 +2098,7 @@ Store.prototype = extend(Store.prototype, {
       this.states = mori.pop(this.states);
       this.state = mori.peek(this.states);
     }
+    this._notify();
   },
 
   replaceState: function (state) {

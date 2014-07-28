@@ -27,7 +27,9 @@ var TodoConstants = Fluxy.createConstants({
     'TODO_DESTROY',
     'TODO_DESTROY_COMPLETED_TODOS'
   ],
-  messages: [],
+  messages: [
+    'TODO_UNDO'
+  ],
   values: {}
 });
 

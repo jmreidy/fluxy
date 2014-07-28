@@ -96,6 +96,9 @@ var TodoStore = Fluxy.createStore({
           todoMap
         );
       });
+    }],
+    [TodoConstants.TODO_UNDO, function () {
+      this.undo();
     }]
   ]
 });
