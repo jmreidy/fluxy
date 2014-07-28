@@ -1,5 +1,12 @@
 # Fluxy TodoMVC Example
-A sample implementation of Fluxy, based on Facebook's [example Flux project](https://github.com/facebook/react/tree/master/examples/todomvc-flux).
+A sample implementation of Fluxy, based on Facebook's [example Flux
+project](https://github.com/facebook/react/tree/master/examples/todomvc-flux).
+
+In addition to the usual TodoMVC functionality, this example shows some nice Fluxy benefits:
+
+* easy undo of last action
+* saving client app state to the server
+* server-side rendering with React and Fluxy
 
 ## TodoMVC Example Implementation
 
