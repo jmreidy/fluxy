@@ -218,6 +218,19 @@ describe('Fluxy Store', function () {
 
         expect(Store.get('topLevel')).to.equal('flat');
       });
+
+      it('notifies watchers', function () {
+        var watcher = Sinon.spy();
+        Store.addWatch(watcher);
+
+        var firstState = Store.state;
+        Store.set('topLevel', 1);
+        var secondState = Store.state;
+
+        Store.undo();
+
+        expect(watcher).to.have.been.calledWith('*', secondState, firstState);
+      });
     });
 
   });
