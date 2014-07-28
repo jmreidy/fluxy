@@ -16,6 +16,11 @@ var assignDataToStore = function(initialData, Store) {
   }
 };
 
+var safeStringify = function (obj) {
+  return JSON.stringify(obj).replace(/<\//g, '<\\\\/').replace(/<\!--/g, '<\\\\!--');
+};
+
+
 var Fluxy = function () {
   this._dispatcher = new Dispatcher();
 };
@@ -65,14 +70,16 @@ Fluxy.bootstrap = function (key, context) {
   Fluxy.start(initialData);
 };
 
-Fluxy.renderStateToString = function () {
+Fluxy.renderStateToString = function (serializer) {
   var state = {};
+  serializer = serializer || safeStringify;
   stores.forEach(function (store) {
     if (store.name) {
       state[store.name] = store.toJS(store.state);
     }
   });
-  return JSON.stringify(state);
+
+  return serializer(state);
 };
 
 Fluxy.reset = function () {
