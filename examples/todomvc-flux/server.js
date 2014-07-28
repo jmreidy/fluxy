@@ -5,23 +5,33 @@ var Fluxy = require('fluxy');
 var React = require('react');
 var st = require('st');
 var express = require('express');
+var bodyParser = require('body-parser');
 var fs = require('fs');
 
 var app = express();
 
-var getTodos = function (req) {
-  var todos = [];
-  for (var i = 0; i < 5; i++) {
-    todos.push({
-      id: Date.now() + i,
-      text: 'Todo ' + (i+1),
-      complete: (Math.random() > 0.5)
-    });
-  }
+var getAppState = function (cb) {
+  fs.readFile('./db.json', 'utf8', function (err, result) {
+    if (err) {
+      cb(err);
+    }
+    else {
+      cb(null, JSON.parse(result));
+    }
+  });
+};
+
+var getTodos = function () {
+  var todos = [{
+    id: Date.now(),
+    text: 'Sample todo',
+    complete: false
+  }];
   var initialState = todos.reduce(function (acc, todo) {
     acc[todo.id] = todo;
     return acc;
   }, {});
+
   return initialState;
 };
 
@@ -37,12 +47,28 @@ app.use("/assets", st({
 }));
 
 app.get('/todo', function (req, res, next) {
-  Fluxy.start({
-    TodoStore: {
-      todos: getTodos(req)
+  getAppState(function (err, state) {
+    if (!state) {
+      state = {
+        TodoStore: {
+          todos: getTodos()
+        }
+      };
+    }
+    Fluxy.start(state);
+    res.send(renderApp(Fluxy));
+  });
+});
+
+app.post('/todo', [bodyParser.json()], function (req, res, next) {
+  fs.writeFile('./db.json', JSON.stringify(req.body), function (err) {
+    if (err) {
+      res.send(err);
+    }
+    else {
+      res.send(200);
     }
   });
-  res.send(renderApp(Fluxy));
 });
 
 app.listen(3333);

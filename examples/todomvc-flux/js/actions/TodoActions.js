@@ -44,6 +44,9 @@ var TodoActions = Fluxy.createActions({
   },
   undo: function () {
     this.dispatchAction(TodoConstants.TODO_UNDO, {});
+  },
+  save: function () {
+    return TodoService.save();
   }
 });
 

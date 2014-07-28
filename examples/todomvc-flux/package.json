@@ -15,6 +15,7 @@
     "envify": "~1.2.0",
     "reactify": "~0.4.0",
     "statics": "~0.1.0",
+    "superagent": "^0.18.2",
     "uglify-js": "~2.4.13",
     "watchify": "~0.4.1"
   },

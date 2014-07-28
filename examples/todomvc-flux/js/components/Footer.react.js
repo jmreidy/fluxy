@@ -74,6 +74,11 @@ var Footer = React.createClass({
           Undo Last
         </button>
         {clearCompletedButton}
+        <button
+          className="footer-button"
+          onClick={this._onSaveClick}>
+          Save App State
+        </button>
       </footer>
     );
   },
@@ -84,6 +89,10 @@ var Footer = React.createClass({
 
   _onUndoClick: function () {
     TodoActions.undo();
+  },
+
+  _onSaveClick: function () {
+    TodoActions.save();
   }
 
 });
