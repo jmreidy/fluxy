@@ -286,6 +286,40 @@ functions, but otherwise, ClojureScript objects should not be used extensively (
 of tying your components too tightly to the Fluxy implementation.
 
 
+###"Harness"
+Stores, Actions, and Constants are all managed by a singleton Fluxy. In addition to allowing you to create
+these key components of a Fluxy app, it also allows you to easily access the global application state.
+
+`createStore`, `createActions`, and `createConstants` are all described in the respective sections above.
+
+`start(initialState)` is the call that triggers the instantiation and injection of all Fluxy components. If you pass a
+hash map into the start function, it will set the state of each store to reflect the injected map. For example,
+say you have a Store with a name of `TodoStore` and call start with `{TodoStore: { todos: todosArr }}`; making
+this call will start the app with the TodoStore having the todo key in its state set to the value of `todosArr`.
+
+`bootstrap(prop, context)` is a convenience method for calling start with the
+value of a window prop (or a prop on a provided context). Bootstrap is most useful for, appropriately,
+bootstrapping an application's state with serialized JSON embedded in the page's HTML.
+
+`renderStateToString(serializer)` serializes the entire graph of all Store states to a string,
+with the keys of the serialization corresponding to each Store's name. While this method will
+default to using a "safe" version of `JSON.stringify`, any serialization function can be provided - for example,
+the `write` function from cognitect/transit-js.
+
+`start`, `bootstrap`, and `renderStateToString` can be easily combined to power server-side rendering. Just follow
+the below steps:
+
+1. Give your stores a unique name. `Fluxy.createStore({name: 'TodoStore', //other config})`
+
+2. Before calling `React.renderComponentToString`, make sure to call `Fluxy.start` on the server,
+passing it a hash of Store initial states (keyed by Store name)
+
+3. Make sure to bootstrap your HTML load with the state you passed to Fluxy with `Fluxy.renderStateToString`
+
+4. Finally, in your client side code, instead of calling `Fluxy.start`, call `Fluxy.bootstrap(windowKeyOfBootstrappedData)`
+
+---
+
 For further details, be sure to check out the `examples` directory and the test suite.
 
 ##Roadmap to 1.0
