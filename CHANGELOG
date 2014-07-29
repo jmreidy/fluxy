@@ -1,3 +1,10 @@
+0.4.1
+Tue, 29 Jul 2014 17:37:36 GMT
+
+ba95033 [fixed] Correctly apply action array payloads
+2eef47b [removed] previous CHANGES file
+
+
 v0.4.0
 Tue, 29 Jul 2014 02:46:10 GMT
 
