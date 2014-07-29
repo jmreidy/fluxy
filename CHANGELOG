@@ -2,6 +2,7 @@ v0.4.0
 Tue, 29 Jul 2014 02:46:10 GMT
 
 b06f7e1 [added] server side rendering (renderStateToString)
+572c364 [added] ability to specify state serializer (e.g. transit-js)
 524efbf [fixed] undo to notify watchers
 668b705 [added] docs for server side rendering
 204c421 [added] Store.setFromJS
