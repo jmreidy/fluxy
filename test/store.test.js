@@ -194,6 +194,14 @@ describe('Fluxy Store', function () {
       });
     });
 
+    describe('#setFromJS', function () {
+      it('casts the set value into CLJS', function () {
+        Store.setFromJS('foo.jsVal', {isJS: true});
+
+        expect(mori.is_map(Store.get('foo.jsVal'))).to.be.true;
+      });
+    });
+
     describe('#getAsJS', function () {
       it('casts get results into JS', function () {
         expect(Store.getAsJS('foo')).to.deep.equal({bar: 'bar'});
