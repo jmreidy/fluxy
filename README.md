@@ -266,6 +266,10 @@ of the Store's existing state. That's right - the entire history of Store states
 you can always call `Store.undo()` to rollback state. After updating the Store's state and state history, `set` will trigger
 an event for any defined watchers with references to both the previous state and the new state.
 
+In addition to `set`, there's a corresponding `setFromJS` method which automatically converts
+the set value into a ClojureScript data structure (e.g. a JS object to a CLJS map). It delegates
+to the underlying `Store.set` method.
+
 Watchers are defined against the Store directly:
 ```javascript
 Store.addWatch(function (keys, oldState, newState) {...});
