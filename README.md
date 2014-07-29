@@ -16,7 +16,7 @@ introducing the core concepts behind Flux, there's a few key details that are im
 to emphasize:
 
 ###Stores
-All application data is managed in Stores, which a Singleton objects focused on a specific
+All application data is managed in Stores, which are Singleton objects focused on a specific
 set of business logic (e.g ArticleStore, UserStore). Views should intereact with Stores
 as the single source of data truth. Store *do not replace* the React state system; rather,
 React components should use state to handle view-specific data state, and stores to handle applicaiton
