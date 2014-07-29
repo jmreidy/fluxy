@@ -10,7 +10,7 @@ describe('Fluxy Dispatcher', function () {
 
   describe('#dispatchAction', function () {
 
-    it('should execute registered actions', function () {
+    it('executes registered actions', function () {
       var results = [];
 
       var dispatcher = new Dispatcher();
@@ -24,15 +24,25 @@ describe('Fluxy Dispatcher', function () {
       dispatcher.dispatchAction('foo');
     });
 
-    it('should pass the payload to registered actions', function () {
+    it('passes the payload to registered actions', function (done) {
       var testPayload = 'abc';
       dispatcher.registerAction('foo', function (payload) {
         expect(payload).to.equal(testPayload);
+        done();
       });
       dispatcher.dispatchAction('foo', testPayload);
     });
 
-    it('should execute registered async actions', function () {
+    it('correctly applies array payloads', function (done) {
+      var testPayload = ['a', 'b'];
+      dispatcher.registerAction('foo', function (payload) {
+        expect(payload).to.equal(testPayload);
+        done();
+      });
+      dispatcher.dispatchAction('foo', testPayload);
+    });
+
+    it('executes registered async actions', function (done) {
       var results = [];
 
       var testPayload = 'abc';
@@ -42,6 +52,7 @@ describe('Fluxy Dispatcher', function () {
           results.push('a');
           expect(results).to.include('a');
           expect(results).to.include('b');
+          done();
         });
         setTimeout(function () { token.resolve(); }, 200);
         return promise;
@@ -54,7 +65,7 @@ describe('Fluxy Dispatcher', function () {
   });
 
   describe('#registerAction', function () {
-    it('should respect the order of registered actions', function () {
+    it('respects the order of registered actions', function (done) {
       var results = [];
 
       var dispatcher = new Dispatcher();
@@ -75,13 +86,14 @@ describe('Fluxy Dispatcher', function () {
       dispatcher.registerAction('foobar', function (payload) {
         results.push('d');
         expect(results[3]).to.equal('d');
+        done();
       });
       dispatcher.dispatchAction('foo');
       dispatcher.dispatchAction('bar');
       dispatcher.dispatchAction('foobar');
     });
 
-    it('should allow for specifying action dependencies', function () {
+    it('allows for specifying action dependencies', function (done) {
       var results = [];
 
       var dispatcher = new Dispatcher();
@@ -112,6 +124,7 @@ describe('Fluxy Dispatcher', function () {
             results.push('c');
             expect(payload).to.equal(testPayload);
             expect(results).to.deep.equal(['a', 'b', 'c']);
+            done();
           }
       );
       dispatcher.dispatchAction('foo', testPayload);
