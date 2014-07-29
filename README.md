@@ -92,7 +92,7 @@ var TodoActions = Fluxy.createActions({
       return TodoService.destroy(id); //returns promise
     }]
   },
-  toggleExanded: function (expandFlag) {
+  toggleExpanded: function (expandFlag) {
     this.dispatchAction(TodoConstants.TODO_TOGGLE_EXPANDED, expandFlag);
   }
 });
