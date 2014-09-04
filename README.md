@@ -230,7 +230,7 @@ Also note that it's possible to create dependencies in how Stores handle dispatc
 the defined handler is called AFTER the SessionStore handler has finished.
 ```javascript
   actions: [
-    [UserConstants.LOGIN_COMPLETED, {waitFor: [SessionStore], function (user) {
+    [UserConstants.LOGIN_COMPLETED, {waitFor: [SessionStore]}, function (user) {
       this.set('user', user);
     }],
   ]
