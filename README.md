@@ -253,7 +253,7 @@ is the rough equivalent of `Store.state.todos[571].text`. (Don't worry, ClojureS
 its data structure!)
 
 `set(keyOrArrayOfKeys, valOrFn)` is the setter equivalent of `get`. In addition to performing the same flat or deep
-access that `get` provides, it can also update a value in one of two aways - either by assigning a value directly, or
+access that `get` provides, it can also update a value in one of two ways - either by assigning a value directly, or
 as the result of an update function. In the example below...
 ```javascript
 Store.set(['todos', 101, 'complete'], function (completeFlag) { return !completeFlag; });
