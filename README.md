@@ -249,7 +249,7 @@ most of the interactions should be made through the helper API functions `get` a
 `get(keyOrKeyArray)` calls directly into `Store.state`. It can be provided with a string key or an array of keys.
 A string key lookup is the rough equivalent of `state.<key>`. The array lookup is much more powerful, as it allows
 for "looking into" the Store state, reaching deeply into a nested data structore. For example, `get(['todos', 571, 'text'])`
-is the rough equivalent of `Store.state.todos[571].text`. (Don't worry, ClojureScript won't through an undefined error as it walks
+is the rough equivalent of `Store.state.todos[571].text`. (Don't worry, ClojureScript won't throw an undefined error as it walks
 its data structure!)
 
 `set(keyOrArrayOfKeys, valOrFn)` is the setter equivalent of `get`. In addition to performing the same flat or deep
@@ -261,7 +261,7 @@ Store.set(['todos', 101, 'complete'], function (completeFlag) { return !complete
 ...the state of todo 101's completion is being toggled by the update function. This notation allows for
 some nice functional composition.
 
-There's another few benefits to using the `set` helper. First, it not only updates the Store state - it handles the storage
+There are a few other benefits to using the `set` helper. First, it not only updates the Store state - it handles the storage
 of the Store's existing state. That's right - the entire history of Store states is tracked in `Store.state`. That means
 you can always call `Store.undo()` to rollback state. After updating the Store's state and state history, `set` will trigger
 an event for any defined watchers with references to both the previous state and the new state.
@@ -333,4 +333,3 @@ For further details, be sure to check out the `examples` directory and the test 
 - [ ] Lock down API
 - [ ] Add code documentation
 - [ ] Cleanup internal implementation
-
