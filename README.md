@@ -19,7 +19,7 @@ to emphasize:
 All application data is managed in Stores, which are Singleton objects focused on a specific
 set of business logic (e.g ArticleStore, UserStore). Views should intereact with Stores
 as the single source of data truth. Store *do not replace* the React state system; rather,
-React components should use state to handle view-specific data state, and stores to handle applicaiton
+React components should use state to handle view-specific data state, and stores to handle application
 data state. Stores are event emitters that emit change events for underlying state changes.
 
 ###Actions
