@@ -44,19 +44,27 @@ in-memory storage.
 The bundle.js file is automatically genenerated by the build process, explained
 below.
 
-## Running
+## Building
 
 You must have [npm](https://www.npmjs.org/) installed on your computer.
-From the root project directory run these commands from the command line:
+Also [browserify](http://browserify.org/) must be installed globally in order to build the app.
+
+From the example's root directory run these commands from the command line:
 
     npm install
 
 This will install all dependencies.
 
+    npm install -g browserify@~2.36.0
+
+This installs browserify globally. A symlink, typically under `/usr/local/bin/browserify`, will be created and you (as well as the build script) can run the `browserify` command from now on.
+
+## Running
+
 There are two ways of running the example.
 
 First, as a client side only app (via static HTML), just run `npm run-script build` and
-then start a http server that makes the index.html file accessible (via, say, `httpster`).
+then start a http server that makes the index.html file accessible (via, say, [`httpster`](https://github.com/SimbCo/httpster)).
 
 Alternatively, you can run an express server that will enable server side rendering. To do so,
 just run `npm run-script server`, and then hit localhost:3333/todo.
