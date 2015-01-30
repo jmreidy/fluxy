@@ -2,8 +2,10 @@ var Sinon = require('sinon');
 var Store = require('../lib/Store');
 var Action = require('../lib/Action');
 
+
 describe('Fluxy', function () {
   var Fluxy = proxyquire('../index', {});
+
 
   //createStore, createActions, and createConstants tested further in
   //their own unit tests
@@ -33,6 +35,7 @@ describe('Fluxy', function () {
       Fluxy = proxyquire('../index', {
         './lib/Dispatcher': Sinon.spy(Dispatcher)
       });
+      Fluxy.setCollectionProxyType('mori');
 
       store = Fluxy.createStore({});
       Sinon.spy(store, 'mount');
@@ -65,7 +68,7 @@ describe('Fluxy', function () {
     context('when passed an object', function () {
       var namedStore;
       beforeEach(function () {
-        namedStore= Fluxy.createStore({name: 'NamedStore'});
+        namedStore = Fluxy.createStore({name: 'NamedStore'});
         fluxy = Fluxy.start({
           NamedStore: {
             foo: 'bar'
@@ -122,10 +125,6 @@ describe('Fluxy', function () {
         state = transit.reader('json-verbose').read(state);
         expect(state.get('NamedStore').get('date')).to.be.an.instanceOf(Date);
       });
-  });
-
-  describe('it exposes mori', function () {
-    expect(Fluxy.$).to.equal(require('mori'));
   });
 
 });
