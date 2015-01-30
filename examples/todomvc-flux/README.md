@@ -44,22 +44,14 @@ in-memory storage.
 The bundle.js file is automatically genenerated by the build process, explained
 below.
 
-## Building
+## Running
 
 You must have [npm](https://www.npmjs.org/) installed on your computer.
-Also [browserify](http://browserify.org/) must be installed globally in order to build the app.
-
-From the example's root directory run these commands from the command line:
+From the example's root directory run these commands on the command line:
 
     npm install
 
 This will install all dependencies.
-
-    npm install -g browserify@~2.36.0
-
-This installs browserify globally. A symlink, typically under `/usr/local/bin/browserify`, will be created and you (as well as the build script) can run the `browserify` command from now on.
-
-## Running
 
 There are two ways of running the example.
 
