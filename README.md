@@ -17,7 +17,7 @@ to emphasize:
 
 ###Stores
 All application data is managed in Stores, which are Singleton objects focused on a specific
-set of business logic (e.g ArticleStore, UserStore). Views should intereact with Stores
+set of business logic (e.g ArticleStore, UserStore). Views should interact with Stores
 as the single source of data truth. Store *do not replace* the React state system; rather,
 React components should use state to handle view-specific data state, and stores to handle application
 data state. Stores are event emitters that emit change events for underlying state changes.
@@ -59,7 +59,7 @@ includes some differentiating features:
 ##How it Works
 A Fluxy implementation will define and use three different types of service
 objects: Stores, Actions, and Constants. While these three types of objects operate
-in concert, their roles are very distrint from one another - in fact, a Store should
+in concert, their roles are very distinct from one another - in fact, a Store should
 never call an Action, and an Action should never call into a Store. Instead, the Dispatcher
 unifies Action and Store objects, with messages defined by Constants. (All of the details
 of the Dispatch queue are hidden from the actual application implementation, so you don't need
