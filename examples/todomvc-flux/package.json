@@ -19,10 +19,11 @@
     "superagent": "^0.18.2",
     "uglify-js": "~2.4.13",
     "watchify": "~0.4.1",
-    "react-tools": "^0.11.0"
+    "react-tools": "^0.11.0",
+    "browserify": "^8.1.1"
   },
   "scripts": {
-    "build": "STATIC_ROOT=./static NODE_ENV=production browserify -o assets/js/bundle.js -e js/app.js",
+    "build": "STATIC_ROOT=./static NODE_ENV=production ./node_modules/.bin/browserify -o assets/js/bundle.js -e js/app.js",
     "server": "npm run-script build && node server"
   },
   "author": "Justin Reidy",
