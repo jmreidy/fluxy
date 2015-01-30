@@ -28,11 +28,13 @@
     "lodash-node": "^2.4.1",
     "minimist": "^0.2.0"
   },
+  "peerDependencies": {
+    "immutable": "^3.6.2",
+    "mori": "^0.2.9"
+  },
   "devDependencies": {
     "body-parser": "^1.5.2",
-    "immutable": "^3.6.2",
     "mocha": "^1.20.1",
-    "mori": "^0.2.9",
     "proxyquire": "^1.0.1",
     "sinon": "^1.10.3",
     "sinon-chai": "^2.5.0",
