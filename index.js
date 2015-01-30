@@ -87,6 +87,14 @@ Fluxy.reset = function () {
   actions = [];
 };
 
+//What type of collections are being used?
+//e.g. mori, immutable
+Fluxy.setCollectionProxyType = function (type) {
+  var Proxy = require('./lib/collections/Proxy');
+  Fluxy.$ = Proxy._setProxyType(type);
+  Fluxy._Proxy = Proxy;
+};
+
 
 Fluxy.prototype = extend(Fluxy.prototype, {
   //dispatcher delegation
@@ -102,4 +110,3 @@ Fluxy.prototype = extend(Fluxy.prototype, {
 });
 
 module.exports = Fluxy;
-module.exports.$ = require('mori');
