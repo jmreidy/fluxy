@@ -305,9 +305,11 @@ var StoreTests = function (proxyTests) {
 };
 
 describe('Using Mori', function () {
-  var mori = require('mori');
+  var mori = require('mori'),
+      MoriProxy = require('../lib/collections/MoriProxy');
+
   before(function () {
-    Fluxy.setCollectionProxyType('mori');
+    Fluxy.setCollectionProxyType(MoriProxy);
   });
 
   StoreTests({
@@ -335,9 +337,11 @@ describe('Using Mori', function () {
 });
 
 describe('Using Immutable', function () {
-  var Immutable = require('immutable');
+  var Immutable = require('immutable'),
+      ImmutableProxy = require('../lib/collections/ImmutableProxy');
+
   before(function () {
-    Fluxy.setCollectionProxyType('immutable');
+    Fluxy.setCollectionProxyType(ImmutableProxy);
   });
 
   StoreTests({
