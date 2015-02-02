@@ -6,21 +6,24 @@
   "dependencies": {
     "react": "^0.11.0",
     "express": "^4.6.1",
+    "body-parser": "^1.5.2",
     "node-jsx": "^0.11.0",
     "st": "^0.5.1",
-    "fluxy": "jmreidy/fluxy"
+    "fluxy": "jmreidy/fluxy",
+    "bluebird": "^1.2.4"
   },
   "devDependencies": {
-    "browserify": "~2.36.0",
     "envify": "~1.2.0",
     "reactify": "~0.4.0",
     "statics": "~0.1.0",
     "superagent": "^0.18.2",
     "uglify-js": "~2.4.13",
-    "watchify": "~0.4.1"
+    "watchify": "~0.4.1",
+    "react-tools": "^0.11.0",
+    "browserify": "^8.1.1"
   },
   "scripts": {
-    "build": "STATIC_ROOT=./static NODE_ENV=production browserify -o assets/js/bundle.js -e js/app.js",
+    "build": "STATIC_ROOT=./static NODE_ENV=production ./node_modules/.bin/browserify -o assets/js/bundle.js -e js/app.js",
     "server": "npm run-script build && node server"
   },
   "author": "Justin Reidy",
