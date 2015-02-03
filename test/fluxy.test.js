@@ -28,14 +28,16 @@ describe('Fluxy', function () {
   });
 
   describe('.start', function () {
-    var fluxy, store, action, Dispatcher, Fluxy;
+    var MoriProxy, fluxy, store, action, Dispatcher, Fluxy;
 
     beforeEach(function () {
+      MoriProxy = require('../lib/collections/MoriProxy');
       Dispatcher = Sinon.spy(require('../lib/Dispatcher'));
       Fluxy = proxyquire('../index', {
         './lib/Dispatcher': Sinon.spy(Dispatcher)
       });
-      Fluxy.setCollectionProxyType('mori');
+
+      Fluxy.setCollectionProxyType(MoriProxy);
 
       store = Fluxy.createStore({});
       Sinon.spy(store, 'mount');
