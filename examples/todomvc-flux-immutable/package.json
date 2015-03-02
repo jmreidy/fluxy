@@ -1,0 +1,39 @@
+{
+  "name": "todomvc-flux",
+  "version": "0.0.1",
+  "description": "Example Flux architecture.",
+  "main": "js/app.js",
+  "dependencies": {
+    "bluebird": "^1.2.4",
+    "body-parser": "^1.5.2",
+    "express": "^4.6.1",
+    "fluxy": "../../",
+    "immutable": "^3.6.2",
+    "node-jsx": "^0.11.0",
+    "react": "^0.12.0",
+    "st": "^0.5.1"
+  },
+  "devDependencies": {
+    "jsx-loader": "^0.12.2",
+    "statics": "~0.1.0",
+    "superagent": "^0.18.2",
+    "react-hot-loader": "^1.1.5",
+    "react-tools": "^0.12.0",
+    "webpack": "^1.6.0",
+    "webpack-dev-server": "^1.7.0"
+  },
+  "scripts": {
+    "build": "webpack",
+    "prod": "NODE_ENV=production webpack -p",
+    "start": "npm run build && node server",
+    "dev": "echo '=> Open http://localhost:3334/webpack-dev-server/index.html in your browser';webpack-dev-server --colors --port 3334 --output-public-path http://localhost:3334/assets/js/ --hot"
+  },
+  "author": "Justin Reidy",
+  "license": "Apache 2",
+  "browserify": {
+    "transform": [
+      "reactify",
+      "envify"
+    ]
+  }
+}
