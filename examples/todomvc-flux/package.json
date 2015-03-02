@@ -4,24 +4,28 @@
   "description": "Example Flux architecture.",
   "main": "js/app.js",
   "dependencies": {
-    "react": "^0.11.0",
+    "bluebird": "^1.2.4",
+    "body-parser": "^1.5.2",
     "express": "^4.6.1",
+    "fluxy": "../../",
+    "immutable": "^3.6.2",
     "node-jsx": "^0.11.0",
-    "st": "^0.5.1",
-    "fluxy": "jmreidy/fluxy"
+    "react": "^0.12.0",
+    "st": "^0.5.1"
   },
   "devDependencies": {
-    "browserify": "~2.36.0",
-    "envify": "~1.2.0",
-    "reactify": "~0.4.0",
+    "jsx-loader": "^0.12.2",
     "statics": "~0.1.0",
     "superagent": "^0.18.2",
-    "uglify-js": "~2.4.13",
-    "watchify": "~0.4.1"
+    "react-hot-loader": "^1.1.5",
+    "react-tools": "^0.11.0",
+    "webpack": "^1.6.0",
+    "webpack-dev-server": "^1.7.0"
   },
   "scripts": {
-    "build": "STATIC_ROOT=./static NODE_ENV=production browserify -o assets/js/bundle.js -e js/app.js",
-    "server": "npm run-script build && node server"
+    "build": "./node_modules/.bin/webpack -p",
+    "start": "npm run-script build && node server",
+    "dev": "echo '=> Open http://localhost:3334/webpack-dev-server/index.html in your browser';./node_modules/.bin/webpack-dev-server --colors --port 3334 --output-public-path http://localhost:3334/assets/js/ --hot"
   },
   "author": "Justin Reidy",
   "license": "Apache 2",

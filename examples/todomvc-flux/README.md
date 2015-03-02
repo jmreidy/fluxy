@@ -47,19 +47,22 @@ below.
 ## Running
 
 You must have [npm](https://www.npmjs.org/) installed on your computer.
-From the root project directory run these commands from the command line:
+From the example's root directory run these commands on the command line:
 
     npm install
 
 This will install all dependencies.
 
-There are two ways of running the example.
+There are three ways of running the example.
 
 First, as a client side only app (via static HTML), just run `npm run-script build` and
-then start a http server that makes the index.html file accessible (via, say, `httpster`).
+then start a http server that makes the index.html file accessible (via, say, [`httpster`](https://github.com/SimbCo/httpster)).
 
 Alternatively, you can run an express server that will enable server side rendering. To do so,
 just run `npm run-script server`, and then hit localhost:3333/todo.
+
+Finally, you can run a dev server that will hot-reload when you make changes.
+To do that, run `npm run-script dev` and open your browser to the address indicated.
 
 ## Credit
 

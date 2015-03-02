@@ -19,12 +19,16 @@
 var React = require('react');
 var Fluxy = require('fluxy');
 
+var ImmutableProxy = require('fluxy/lib/collections/ImmutableProxy');
+
+Fluxy.setCollectionProxyType(ImmutableProxy);
+
 var TodoApp = require('./components/TodoApp.react');
 
 
 Fluxy.bootstrap('__fluxy__');
 
-React.renderComponent(
+React.render(
   <TodoApp />,
   document.getElementById('todoapp')
 );

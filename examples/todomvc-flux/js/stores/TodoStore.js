@@ -25,18 +25,17 @@ var TodoStore = Fluxy.createStore({
   getInitialState: function () {
     //we're using a hash for todos b/c the Facebook base example does.
     //With mori, a vector might make more sense.
-    return {
-      todos: {}
-    };
+    //With Immutable, a List might make more sense.
+    return $.OrderedMap();
   },
   areAllComplete: function () {
-    return $.every(function (todo) {
-      return $.get(todo, 'completed') === true;
-    }, $.vals(this.get('todos')));
+    return this.state.every(function (todo) {
+      return todo.get('complete') === true;
+    });
   },
   actions: [
     [TodoConstants.TODO_CREATE_COMPLETED, function (todo) {
-      this.set(['todos', todo.id.toString()], $.js_to_clj(todo));
+      this.setFromJS(todo.id, todo);
     }],
     [TodoConstants.TODO_CREATE_FAILED, function (err) {
       //if we'd updated optimistically by handling TodoConstants.TODO_CREATE,
@@ -47,55 +46,29 @@ var TodoStore = Fluxy.createStore({
     //that is, they're responding to the base serviceMessage
     //instead of _COMPLETED or _FAILED messages
     [TodoConstants.TODO_UPDATE_TEXT, function (id, text) {
-      this.set(['todos', id.toString(), 'text'], text);
+      this.setFromJS([id, 'text'], text);
     }],
     [TodoConstants.TODO_TOGGLE_COMPLETION, function (id) {
-      this.set(['todos', id.toString(), 'complete'], function (completed) {
-        return !completed;
+      this.setFromJS([id, 'complete'], function (complete) {
+        return !complete;
       });
     }],
     [TodoConstants.TODO_COMPLETE_ALL, function () {
-      this.set(['todos'], function (todoMap) {
-        return $.reduce_kv(
-          function(acc, key, val) {
-            return $.assoc(acc, key, $.assoc(val, 'complete', true));
-          },
-          $.hash_map(),
-          todoMap
-        );
-      });
+      this.set(null, this.state.map(function (todo) {
+        if (!todo.get('complete')) {
+          return todo.set('complete', true);
+        } else {
+          return todo;
+        }
+      }));
     }],
     [TodoConstants.TODO_DESTROY, function (id) {
-      this.set(['todos'], function (todoMap) {
-        return $.reduce_kv(
-          function (acc, key, val) {
-              if ($.get(val, 'id') !== id) {
-                return $.assoc(acc, key, val);
-              }
-              else {
-                return acc;
-              }
-            },
-            $.hash_map(),
-            todoMap
-          );
-      });
+      this.set(null, this.state.delete(id));
     }],
     [TodoConstants.TODO_DESTROY_COMPLETED_TODOS, function () {
-      this.set(['todos'], function (todoMap) {
-        return $.reduce_kv(
-          function (acc, key, val) {
-            if ($.get(val, 'complete') !== true) {
-              return $.assoc(acc, key, val);
-            }
-            else {
-              return acc;
-            }
-          },
-          $.hash_map(),
-          todoMap
-        );
-      });
+      this.set(null, this.state.filter(function (todo) {
+        return !todo.get('complete');
+      }));
     }],
     [TodoConstants.TODO_UNDO, function () {
       this.undo();

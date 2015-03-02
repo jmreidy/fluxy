@@ -32,7 +32,7 @@ var TodoStore = require('../stores/TodoStore');
  */
 function getTodoState() {
   return {
-    allTodos: TodoStore.get('todos'),
+    allTodos: TodoStore.get(),
     areAllComplete: TodoStore.areAllComplete()
   };
 }
@@ -57,7 +57,7 @@ var TodoApp = React.createClass({
 
   render: function() {
     var allTodos = TodoStore.toJS(this.state.allTodos);
-  	return (
+    return (
       <div>
         <Header />
         <MainSection

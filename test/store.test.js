@@ -154,6 +154,24 @@ var StoreTests = function (proxyTests) {
 
           });
 
+          context('when provided an empty array on set', function () {
+
+            it('updates the store state with the provided value', function () {
+              Store.set([], ['A']);
+              expect(Store.getAsJS()).to.deep.equal(['A']);
+            });
+
+          });
+
+          context('when provided an empty array on get', function () {
+
+            it('updates the store state with the provided value', function () {
+              Store.set(null, ['A']);
+              expect(Store.getAsJS([])).to.deep.equal(['A']);
+            });
+
+          });
+
         });
 
         context('for a string key', function () {
@@ -177,6 +195,33 @@ var StoreTests = function (proxyTests) {
             it('updates the store state with the provided value', function () {
               Store.set('topLevel', 'isFlat');
               expect(Proxy.get(Store.state, 'topLevel')).to.equal('isFlat');
+            });
+
+          });
+
+        });
+
+        context('for a null key', function () {
+
+          itTracksStoreState();
+          itTriggersWatch('topLevel', 'isFlat');
+
+          context('when provided a function', function () {
+
+            it('updates the store state with the provided function', function () {
+              Store.set(void 0, function (val) {
+                return Proxy.assoc(val, 'bar', 'foobar');
+              });
+              expect(Store.getAsJS(['bar'])).to.equal('foobar');
+            });
+
+          });
+
+          context('when provided a value', function () {
+
+            it('updates the store state with the provided value', function () {
+              Store.setFromJS(null, ['isFlat']);
+              expect(Store.getAsJS()).to.deep.equal(['isFlat']);
             });
 
           });
