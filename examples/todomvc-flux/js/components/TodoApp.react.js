@@ -32,7 +32,7 @@ var TodoStore = require('../stores/TodoStore');
  */
 function getTodoState() {
   return {
-    allTodos: TodoStore.get('todos'),
+    allTodos: TodoStore.get(),
     areAllComplete: TodoStore.areAllComplete()
   };
 }
