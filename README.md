@@ -8,7 +8,7 @@ An implementation of Facebook's Flux architecture.
 The Facebook / React team has an [introduction to
 Flux](http://facebook.github.io/react/docs/flux-overview.html) included with
 the React documentation. Distilled to its core, Flux reimagines the
-tradtional MVC approach to client-side webapps, replacing it with the
+traditional MVC approach to client-side webapps, replacing it with the
 same concept of "one-way data flow" that powers React.
 
 While the Facebook documentation (and accompanying video) do an excellent job of
@@ -169,7 +169,7 @@ An example:
 ```
 A Constant singleton is really just an Enum - in fact, the `createConstants` call is simply deferring
 to the [Enum](https://github.com/adrai/enum) constructor. `messages` and `servicesMessages` have
-equivalent key and value pais. `values` have a string key and a variable value.
+equivalent key and value pairs. `values` have a string key and a variable value.
 
 `serviceMessages` perform the same helpful function as `serviceActions` above - they accomodate for
 the routing call/completed/failed service flow. So each string defined in the `serviceMessages` array
