@@ -24,7 +24,7 @@ var TodoApp = require('./components/TodoApp.react');
 
 Fluxy.bootstrap('__fluxy__');
 
-React.renderComponent(
+React.render(
   <TodoApp />,
   document.getElementById('todoapp')
 );
