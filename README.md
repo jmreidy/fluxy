@@ -41,6 +41,10 @@ their action handlers for specific notifications directly with the Dispatcher, a
 dependencies - that is, an action handler can have its invocation delayed until the completion of other
 action handlers.
 
+##Important Note!!!
+The docs below are accurate as of 0.4.3. The current master (and upcoming 0.5 release) makes the immutable support "pluggable", allowing for alternate engine implementations (e.g. ImmutableJS or Mori). Docs for this new approach are upcoming, but if you want to be on the bleeding edge, refer to the examples and tests as a guide.
+
+
 ###This Implementation
 Facebook has not yet released their own implementation of Flux, but the JS community
 has started the ideas behind the Flux architecture, most notably in @BinaryMuse's
