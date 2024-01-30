@@ -54,3 +54,4 @@ describe('Fluxy Constants', function () {
   });
 
 });
+
